@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Programrzz | Master C++</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        cpp: {
+                            blue: '#00599C', // C++ Logo Blue
+                            dark: '#0d1117', // GitHub Dark Dimmed
+                            accent: '#569CD6',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in-up-delay': 'fadeInUp 0.8s ease-out 0.2s forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for code blocks */
+        .code-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .code-scroll::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+        .code-scroll::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        .code-scroll::-webkit-scrollbar-thumb:hover {
+            background: #58a6ff;
+        }
+        
+        /* Typing animation cursor */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- New Tech Grid Background Styles --- */
+        .grid-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Behind everything */
+            overflow: hidden;
+            background-color: #0d1117; /* Darker Tech Base */
+        }
+
+        /* The Grid Pattern */
+        .tech-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(48, 54, 61, 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(48, 54, 61, 0.4) 1px, transparent 1px);
+            background-size: 50px 50px;
+            /* Spotlight Mask logic handled via CSS var in JS */
+            mask-image: radial-gradient(
+                circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                black 0%, 
+                transparent 100%
+            );
+            -webkit-mask-image: radial-gradient(
+                circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                black 0%, 
+                transparent 100%
+            );
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Subtle glowing dots at intersections (Optional enhancement) */
+        .grid-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 139, 253, 0.1), transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-transparent text-slate-200 font-sans antialiased selection:bg-blue-500 selection:text-white relative">
+
+    <!-- Tech Background Elements -->
+    <div class="grid-bg-container" id="grid-container">
+        <div class="grid-glow"></div>
+        <div class="tech-grid"></div>
+        <!-- Retaining subtle colored blobs for depth, but pushed way back and dimmer -->
+        <div class="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full z-[-2] pointer-events-none opacity-20">
+             <div class="absolute top-20 left-10 w-96 h-96 bg-blue-900/40 rounded-full blur-[100px]"></div>
+             <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-900/40 rounded-full blur-[100px]"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
+                    <i class="fa-solid fa-code text-blue-500 text-2xl"></i>
+                    <span class="font-bold text-xl tracking-tight text-white">Programrzz</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-slate-300 hover:text-blue-400 transition px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#" class="text-blue-400 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#" class="text-slate-300 hover:text-blue-400 transition px-3 py-2 rounded-md text-sm font-medium">Curriculum</a>
+                        <a href="#" class="text-slate-300 hover:text-blue-400 transition px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg shadow-blue-500/20">Get Started</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div class="md:hidden hidden bg-slate-800 border-b border-slate-700" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="text-slate-300 block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-700">Home</a>
+                <a href="#" class="text-white bg-slate-900 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#" class="text-slate-300 block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-700">Curriculum</a>
+                <a href="#" class="text-slate-300 block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-700">Projects</a>
+                <a href="#" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Animated) -->
+    <div class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block mb-4 px-3 py-1 rounded-full bg-slate-800/50 backdrop-blur border border-slate-700 text-blue-400 text-sm font-semibold font-mono animate-fade-in-up">
+                #include &lt;success&gt;
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6 animate-fade-in-up">
+                Not just syntax. <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Engineering Mindsets.</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-400 animate-fade-in-up-delay">
+                Programrzz bridges the gap between "Hello World" and building high-performance engines. We don't just teach C++; we build it.
+            </p>
+        </div>
+    </div>
+
+    <!-- Stats Section (Glassmorphism update for grid visibility) -->
+    <section class="border-y border-slate-800 bg-slate-900/40 backdrop-blur-sm animate-fade-in-up-delay">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-4 hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-bold text-white mb-1">50+</div>
+                    <div class="text-sm text-slate-500 font-medium">Core Modules</div>
+                </div>
+                <div class="p-4 hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-bold text-white mb-1">100%</div>
+                    <div class="text-sm text-slate-500 font-medium">Project Based</div>
+                </div>
+                <div class="p-4 hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-bold text-white mb-1">20+</div>
+                    <div class="text-sm text-slate-500 font-medium">Real-world Projects</div>
+                </div>
+                <div class="p-4 hover:-translate-y-1 transition duration-300">
+                    <div class="text-3xl font-bold text-white mb-1">∞</div>
+                    <div class="text-sm text-slate-500 font-medium">Debugging Hours Saved</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Mission & Philosophy (Split Layout) -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+                <!-- Text Content -->
+                <div class="mb-12 lg:mb-0">
+                    <h2 class="text-3xl font-bold text-white mb-6">Why C++? Why Programrzz?</h2>
+                    <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
+                        <p>
+                            C++ powers the world's most critical infrastructure—from operating systems and game engines to high-frequency trading platforms. But learning it has historically been... dry.
+                        </p>
+                        <p>
+                            At <span class="text-white font-semibold">Programrzz</span>, we believe the best way to learn memory management isn't reading a textbook; it's by crashing your own application and fixing the leak.
+                        </p>
+                        <ul class="space-y-4 mt-8">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-900/50 flex items-center justify-center border border-blue-500/30 mt-1">
+                                    <i class="fa-solid fa-check text-blue-400 text-xs"></i>
+                                </div>
+                                <span class="ml-4"><strong>Zero Fluff:</strong> We skip the academic theory that you'll never use and focus on modern C++ standards (C++17/20).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-900/50 flex items-center justify-center border border-blue-500/30 mt-1">
+                                    <i class="fa-solid fa-check text-blue-400 text-xs"></i>
+                                </div>
+                                <span class="ml-4"><strong>Build Real Tools:</strong> Create Calculators, Text Editors, and simple 2D Games.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Code Visual -->
+                <div class="relative rounded-xl bg-[#0d1117] border border-slate-700 shadow-2xl overflow-hidden group hover:shadow-blue-500/10 transition duration-500">
+                    <!-- Fake Window Header -->
+                    <div class="flex items-center px-4 py-2 border-b border-slate-700 bg-[#161b22]">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="ml-4 text-xs text-slate-500 font-sans">calculator_logic.cpp</div>
+                    </div>
+                    
+                    <!-- Code Content -->
+                    <div class="p-6 overflow-x-auto code-scroll">
+                        <pre class="font-mono text-sm leading-relaxed">
+<span class="text-[#ff7b72]">#include</span> <span class="text-[#a5d6ff]">&lt;iostream&gt;</span>
+<span class="text-[#ff7b72]">#include</span> <span class="text-[#a5d6ff]">&lt;vector&gt;</span>
+
+<span class="text-[#8b949e]">// The Programrzz Philosophy: Clean, Efficient Code</span>
+
+<span class="text-[#ff7b72]">class</span> <span class="text-[#ffa657]">Calculator</span> {
+<span class="text-[#ff7b72]">public</span>:
+    <span class="text-[#79c0ff]">double</span> <span class="text-[#d2a8ff]">add</span>(<span class="text-[#79c0ff]">double</span> <span class="text-[#9cdcfe]">a</span>, <span class="text-[#79c0ff]">double</span> <span class="text-[#9cdcfe]">b</span>) {
+        <span class="text-[#ff7b72]">return</span> <span class="text-[#9cdcfe]">a</span> + <span class="text-[#9cdcfe]">b</span>;
+    }
+
+    <span class="text-[#8b949e]">// More than just math...</span>
+    <span class="text-[#ff7b72]">void</span> <span class="text-[#d2a8ff]">runDiagnostics</span>() {
+        <span class="text-[#ffa657]">std</span>::<span class="text-[#9cdcfe]">cout</span> &lt;&lt; <span class="text-[#a5d6ff]" id="typewriter">"System Ready..."</span><span class="inline-block w-2 h-4 bg-blue-400 ml-1 cursor-blink"></span>;
+    }
+};</pre>
+                    </div>
+                    
+                    <!-- Hover Effect Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Roadmap Section -->
+    <section class="py-20 bg-slate-900/60 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white">From Beginner to Pro</h2>
+                <p class="mt-4 text-slate-400">Our curriculum is designed to take you through three distinct phases of evolution.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-[#161b22] rounded-xl p-8 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-seedling text-8xl text-emerald-500"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-900/30 rounded-lg flex items-center justify-center mb-6 text-emerald-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-terminal text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">The Initiate</h3>
+                    <p class="text-slate-400 text-sm mb-6">Master variables, loops, and control flow. Understand how the computer actually reads your instructions.</p>
+                    <ul class="text-sm text-slate-500 space-y-2 mb-6">
+                        <li>• Setup Environment</li>
+                        <li>• Variables & Data Types</li>
+                        <li>• Logic Gates</li>
+                    </ul>
+                    <a href="#" class="text-emerald-400 text-sm font-semibold hover:text-emerald-300 flex items-center">
+                        View Phase 1 <i class="fa-solid fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-[#161b22] rounded-xl p-8 border border-slate-700 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-code-branch text-8xl text-blue-500"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-900/30 rounded-lg flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cube text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Object Oriented</h3>
+                    <p class="text-slate-400 text-sm mb-6">Dive into OOP. Classes, Inheritance, and Polymorphism. Build modular, reusable code architectures.</p>
+                    <ul class="text-sm text-slate-500 space-y-2 mb-6">
+                        <li>• Classes & Objects</li>
+                        <li>• Memory Management (Pointers)</li>
+                        <li>• STL Library</li>
+                    </ul>
+                    <a href="#" class="text-blue-400 text-sm font-semibold hover:text-blue-300 flex items-center">
+                        View Phase 2 <i class="fa-solid fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-[#161b22] rounded-xl p-8 border border-slate-700 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-rocket text-8xl text-purple-500"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-900/30 rounded-lg flex items-center justify-center mb-6 text-purple-400 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-microchip text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">System Architect</h3>
+                    <p class="text-slate-400 text-sm mb-6">Advanced data structures, algorithms, and multi-threading. Optimization for speed and efficiency.</p>
+                    <ul class="text-sm text-slate-500 space-y-2 mb-6">
+                        <li>• Multithreading</li>
+                        <li>• Custom Data Structures</li>
+                        <li>• Network Programming</li>
+                    </ul>
+                    <a href="#" class="text-purple-400 text-sm font-semibold hover:text-purple-300 flex items-center">
+                        View Phase 3 <i class="fa-solid fa-arrow-right ml-2 text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team / Expertise Section -->
+    <section class="py-20 bg-slate-900/80 border-t border-slate-800 backdrop-blur-md">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-8">Built by Developers, for Developers</h2>
+            <p class="text-slate-400 text-lg mb-12">
+                Programrzz wasn't created by content marketers. It was built by systems engineers who got tired of seeing tutorials that stop at "Hello World".
+            </p>
+            
+            <!-- Simple Project Teaser -->
+            <div class="bg-[#0d1117] rounded-lg p-6 text-left border border-slate-700 font-mono text-sm hover:border-blue-500 transition-colors duration-300">
+                <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-2">
+                    <span class="text-slate-400">Upcoming Project: <span class="text-blue-400">Simple_Calculator</span></span>
+                    <button class="text-xs bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-white transition">Copy Code</button>
+                </div>
+                <div class="text-slate-300">
+                    <span class="text-[#79c0ff]">int</span> <span class="text-[#d2a8ff]">main</span>() {<br>
+                    &nbsp;&nbsp;<span class="text-[#ff7b72]">char</span> op;<br>
+                    &nbsp;&nbsp;<span class="text-[#79c0ff]">double</span> num1, num2;<br>
+                    &nbsp;&nbsp;<span class="text-[#d2a8ff]">cout</span> << <span class="text-[#a5d6ff]">"Enter operator (+, -, *, /): "</span>;<br>
+                    &nbsp;&nbsp;<span class="text-[#d2a8ff]">cin</span> >> op;<br>
+                    &nbsp;&nbsp;<span class="text-[#8b949e]">// Logic to be continued in the course...</span><br>
+                    }
+                </div>
+            </div>
+            
+            <div class="mt-12">
+                <a href="#" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition shadow-lg hover:shadow-blue-500/25 animate-pulse-slow">
+                    Start Learning C++ Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 pt-12 pb-8 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-code text-blue-500 text-xl"></i>
+                        <span class="font-bold text-lg text-white">Programrzz</span>
+                    </div>
+                    <p class="text-slate-500 text-sm">
+                        Master C++ through building. No fluff, just code.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Learn</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">Basics</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">OOP</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Data Structures</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">Discord</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">GitHub</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Forum</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-600 text-sm">&copy; 2023 Programrzz. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-slate-500 hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-white transition"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-white transition"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Typing effect for the "System Ready..." text
+        document.addEventListener('DOMContentLoaded', () => {
+            const textElement = document.getElementById('typewriter');
+            const text = "System Ready...";
+            let index = 0;
+            
+            // Clear initially if needed or let it type over
+            if(textElement) {
+                textElement.textContent = '"';
+
+                function typeWriter() {
+                    if (index < text.length) {
+                        textElement.textContent = '"' + text.substring(0, index + 1) + '"';
+                        index++;
+                        setTimeout(typeWriter, 100);
+                    }
+                }
+                // Start typing animation after a slight delay
+                setTimeout(typeWriter, 1000);
+            }
+        });
+
+        // Track Mouse Movement for Grid Spotlight Effect
+        document.addEventListener('mousemove', (e) => {
+            const gridContainer = document.getElementById('grid-container');
+            if (gridContainer) {
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                // Update CSS variables for the mask position
+                gridContainer.style.setProperty('--mouse-x', x + 'px');
+                gridContainer.style.setProperty('--mouse-y', y + 'px');
+            }
+        });
+    </script>
+</body>
+</html>
